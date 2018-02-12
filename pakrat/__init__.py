@@ -2,7 +2,7 @@ import os
 import sys
 import multiprocessing
 import signal
-import urlparse
+import urllib.parse
 from pakrat import util, log, repo, repos, progress
 
 __version__ = '0.3.2'
@@ -74,11 +74,11 @@ def sync(basedir=None, objrepos=[], repodirs=[], repofiles=[],
         # nonlocal keyword).
         while not queue.empty():
             e = queue.get()
-            if not e.has_key('action'):
+            if 'action' not in e:
                 continue
-            if e['action'] == 'repo_init' and e.has_key('value'):
+            if e['action'] == 'repo_init' and 'value' in e:
                 prog.update(e['repo_id'], set_total=e['value'])
-            elif e['action'] == 'download_end' and e.has_key('value'):
+            elif e['action'] == 'download_end' and 'value' in e:
                 prog.update(e['repo_id'], pkgs_downloaded=e['value'])
             elif e['action'] == 'repo_metadata':
                 prog.update(e['repo_id'], repo_metadata=e['value'])

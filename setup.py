@@ -13,10 +13,10 @@ def required_module(module):
         __import__(module)
         return True
     except:
-        print '\n'.join([
+        print('\n'.join([
             'The "%s" module is required, but was not found.' % module,
             'Please install the module and try again.'
-        ])
+        ]))
         sys.exit(1)
 
 required_module('yum')

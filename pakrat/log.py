@@ -10,7 +10,7 @@ def write(pri, message):
     syslog.openlog('pakrat')  # sets log ident
     syslog.syslog(pri, message)
     if not sys.stdout.isatty():
-        print message  # print if running unattended
+        print(message)  # print if running unattended
 
 def debug(message):
     """ Record a debugging message. """

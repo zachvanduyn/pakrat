@@ -27,7 +27,7 @@ class Progress(object):
         a repository becomes known, when any package finishes downloading,
         when repository metadata begins indexing and when it completes.
         """
-        if not self.repos.has_key(repo_id):
+        if repo_id not in self.repos:
             self.repos[repo_id] = {'numpkgs':0, 'dlpkgs':0, 'repomd':'-'}
         if set_total:
             self.repos[repo_id]['numpkgs'] = set_total
@@ -120,7 +120,7 @@ class Progress(object):
         This makes calls to the other methods of this class to create a
         formatted string, which makes nice columns.
         """
-        if self.repos[repo_id].has_key('error'):
+        if 'error' in self.repos[repo_id]:
             packages = '     error'
             percent  = ''
             metadata = ''
@@ -159,13 +159,13 @@ class Progress(object):
         # Remove repos with errors from totals
         if self.totals['errors'] > 0:
             for repo_id, error in self.errors:
-                if repo_id in self.repos.keys():
+                if repo_id in list(self.repos.keys()):
                     self.totals['dlpkgs'] -= self.repos[repo_id]['dlpkgs']
                     self.totals['numpkgs'] -= self.repos[repo_id]['numpkgs']
                     #del self.repos[repo_id]
                     self.repos[repo_id]['error'] = True
 
-        for repo_id in self.repos.keys():
+        for repo_id in list(self.repos.keys()):
             self.emit(self.represent_repo(repo_id))
         self.emit()
         self.emit(self.format_line('total:', self.represent_total_pkgs(),

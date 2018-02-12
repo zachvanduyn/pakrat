@@ -159,7 +159,7 @@ def sync(repo, dest, version, delete=False, combined=False, yumcallback=None,
 
     except (KeyboardInterrupt, SystemExit):
         pass
-    except Exception, e:
+    except Exception as e:
         callback(repocallback, repo, 'repo_error', str(e))
         log.error(str(e))
         return False
